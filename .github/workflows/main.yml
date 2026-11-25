@@ -5,11 +5,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: SleepAlarm
     steps:
       - uses: actions/checkout@v4
+      - run: unzip -q SleepAlarm.zip
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -17,8 +15,7 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: 8.7
-          build-root-directory: SleepAlarm
-      - run: gradle assembleDebug
+      - run: gradle -p SleepAlarm assembleDebug
       - uses: actions/upload-artifact@v4
         with:
           name: SleepAlarm-apk
